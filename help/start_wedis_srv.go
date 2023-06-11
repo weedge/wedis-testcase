@@ -32,7 +32,7 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 	Expect(len(binPath) != 0).Should(BeTrue())
 	cmd := exec.Command(binPath)
 	cmd.Args = append(cmd.Args, "srv")
-	cmd.Args = append(cmd.Args, "-c", srv.InitConfigs(srvConfigs).Name())
+	cmd.Args = append(cmd.Args, "--config", srv.InitConfigs(srvConfigs).Name())
 
 	dir := srvConfigs["server.storeOpts.dataDir"]
 	Expect(len(dir) != 0).Should(BeTrue())

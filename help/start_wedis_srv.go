@@ -114,3 +114,10 @@ func (s *WedisSrv) close(keepDir bool) {
 	Expect(s.cmd.Wait()).NotTo(HaveOccurred())
 	s.clean(keepDir)
 }
+
+
+func (s *WedisSrv) NewTCPClient() *TCPClient {
+	c, err := net.Dial(s.addr.Network(), s.addr.String())
+	Expect(err).NotTo(HaveOccurred())
+	return newTCPClient(c)
+}

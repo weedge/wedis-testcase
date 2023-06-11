@@ -1,14 +1,7 @@
 {
     "files.associations": {
-        "*.rs": "rust",
-        "initializer_list": "cpp",
-        "deque": "cpp",
-        "chrono": "cpp",
-        "type_traits": "cpp",
-        "__threading_support": "cpp",
-        "iosfwd": "cpp"
+        "*.go": "go",
     },
-    "C_Cpp.errorSquiggles": "disabled",
     "go.testFlags": [
         "-srvBinPath=../wedis/bin/wedis",
         "-dataDir=/tmp/wedis-testcase",

@@ -57,7 +57,7 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 		status, err := proc.Status()
 		g.Expect(err).NotTo(HaveOccurred())
 		g.Expect(status).NotTo(ConsistOf(unexpected))
-	}).WithContext(context.Background()).WithArguments(proc, process.Zombie).WithTimeout(10 * time.Second).WithPolling(time.Second).Should(Succeed())
+	}).WithContext(context.Background()).WithArguments(proc, process.Zombie).WithTimeout(3 * time.Second).WithPolling(time.Second).Should(Succeed())
 
 	srv.configs = srvConfigs
 	srv.cmd = cmd
@@ -93,7 +93,7 @@ func (s *WedisSrv) InitConfigs(srvConfigs map[string]string) (f *os.File) {
 	}()
 
 	for key := range srvConfigs {
-		_, err := f.WriteString(fmt.Sprintf("%s=%s\n", key, srvConfigs[key]))
+		_, err := f.WriteString(fmt.Sprintf("%s = \"%s\"\n", key, srvConfigs[key]))
 		Expect(err).NotTo(HaveOccurred())
 	}
 

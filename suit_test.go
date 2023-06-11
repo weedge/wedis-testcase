@@ -20,12 +20,6 @@ var _ = BeforeSuite(func() {
 })
 
 var _ = AfterSuite(func() {
-	Expect(gSrv).NotTo(HaveOccurred())
+	Expect(gSrv != nil).Should(BeTrue())
 	gSrv.Close()
-})
-
-var _ = Describe("init", func() {
-	It("ok", func() {
-		println("ok")
-	})
 })

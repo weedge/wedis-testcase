@@ -10,9 +10,9 @@ import (
 
 var gSrv *help.WedisSrv
 
-func TestRESPCmd(t *testing.T) {
+func TestSrvCmd(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "redis RESP Cmd Suite")
+	RunSpecs(t, "Srv CMD Suite")
 }
 
 var _ = BeforeSuite(func() {

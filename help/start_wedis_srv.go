@@ -11,7 +11,9 @@ import (
 	"time"
 
 	. "github.com/onsi/gomega"
+	"github.com/redis/go-redis/v9"
 	"github.com/shirou/gopsutil/v3/process"
+	"github.com/spf13/viper"
 	"github.com/weedge/wedis-testcase/pkg/injectors"
 )
 
@@ -25,10 +27,14 @@ type WedisSrv struct {
 	clean func(bool)
 }
 
+func init() {
+	viper.AutomaticEnv()
+}
+
 func StartSrv(srvConfigs map[string]string) *WedisSrv {
 	srv := &WedisSrv{}
 
-	binPath := *srvBinPath
+	binPath := os.Getenv(EnvSrvBinPath)
 	Expect(len(binPath) != 0).Should(BeTrue())
 	cmd := exec.Command(binPath)
 	cmd.Args = append(cmd.Args, "srv")
@@ -64,7 +70,7 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 	srv.clean = func(keepDir bool) {
 		Expect(stdout.Close()).NotTo(HaveOccurred())
 		Expect(stderr.Close()).NotTo(HaveOccurred())
-		if !*keepDataDir || !keepDir {
+		if len(os.Getenv(EnvKeepDataDir)) == 0 || !keepDir {
 			Expect(os.RemoveAll(dir)).NotTo(HaveOccurred())
 		}
 	}
@@ -80,7 +86,7 @@ func (s *WedisSrv) InitConfigs(srvConfigs map[string]string) (f *os.File) {
 			fmt.Sprintf("%s:%d", addr.IP.String(), addr.Port)
 	}
 
-	dir := *dataDir
+	dir := os.Getenv(EnvDataDir)
 	Expect(len(dir) != 0).Should(BeTrue())
 	dir, err = os.MkdirTemp(dir, fmt.Sprintf("%d-*", time.Now().UnixMilli()))
 	Expect(err).NotTo(HaveOccurred())
@@ -115,9 +121,12 @@ func (s *WedisSrv) close(keepDir bool) {
 	s.clean(keepDir)
 }
 
-
 func (s *WedisSrv) NewTCPClient() *TCPClient {
 	c, err := net.Dial(s.addr.Network(), s.addr.String())
 	Expect(err).NotTo(HaveOccurred())
 	return newTCPClient(c)
+}
+
+func (s *WedisSrv) NewRedisClient() redis.UniversalClient {
+	return injectors.InitRedisClient(injectors.WithRedisAddr(s.addr.String()))
 }

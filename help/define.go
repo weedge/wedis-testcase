@@ -1,7 +1,13 @@
 package help
 
-import "time"
+import (
+	"time"
+)
 
 const (
 	DefaultContainerGracePeriod = 30 * time.Second
+
+	EnvSrvBinPath  = "srvBinPath"
+	EnvDataDir     = "dataDir"
+	EnvKeepDataDir = "keepDataDir"
 )

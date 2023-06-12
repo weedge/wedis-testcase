@@ -10,4 +10,5 @@ const (
 	EnvSrvBinPath  = "srvBinPath"
 	EnvDataDir     = "dataDir"
 	EnvKeepDataDir = "keepDataDir"
+	EnvSrvPort     = "srvPort"
 )

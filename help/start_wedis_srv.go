@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -80,11 +81,17 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 func (s *WedisSrv) InitConfigs(srvConfigs map[string]string) (f *os.File) {
 	addr, err := findFreePort()
 	Expect(err).NotTo(HaveOccurred())
-	s.addr = addr
 	if srvConfigs["server.respCmdSrv.addr"] == "" {
-		srvConfigs["server.respCmdSrv.addr"] =
-			fmt.Sprintf("%s:%d", addr.IP.String(), addr.Port)
+		srvConfigs["server.respCmdSrv.addr"] = fmt.Sprintf("%s:%d", addr.IP.String(), addr.Port)
+		srvPort := os.Getenv(EnvSrvPort)
+		if len(srvPort) > 0 {
+			port, err := strconv.Atoi(srvPort)
+			Expect(err).NotTo(HaveOccurred())
+			srvConfigs["server.respCmdSrv.addr"] = fmt.Sprintf("%s:%d", addr.IP.String(), port)
+			addr.Port = port
+		}
 	}
+	s.addr = addr
 
 	dir := os.Getenv(EnvDataDir)
 	Expect(len(dir) != 0).Should(BeTrue())

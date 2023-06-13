@@ -5,14 +5,14 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("AppendCmd", func() {
+var _ = Describe("append Cmd", func() {
 	BeforeEach(func() {
 	})
 
 	AfterEach(func() {
 	})
 
-	It("append", func() {
+	It("ok", func() {
 		Expect("").To(Equal(""))
 	})
 })

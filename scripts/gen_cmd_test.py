@@ -24,8 +24,14 @@ if __name__ == '__main__':
             if os.path.exists(cmdTestFile):
                 print(cmdTestFile, "exists")
                 continue
+
+            tf = open("./scripts/tpl/ginkgo_cmd_test.tpl", 'r')
+            testStr = tf.read().replace("{{CMD_TYPE}}", cmdType).replace(
+                "{{CMD}}", cmd)
+            tf.close()
+
             f = open(cmdTestFile, 'w')
-            f.write("package {}".format(cmdType))
+            f.write(testStr)
             f.close()
             print(cmdTestFile, "create ok")
     print("gen success, have fun :)")

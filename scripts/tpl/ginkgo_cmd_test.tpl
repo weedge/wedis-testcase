@@ -1,11 +1,11 @@
-package hash
+package {{CMD_TYPE}}
 
 import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("httl Cmd", func() {
+var _ = Describe("{{CMD}} Cmd", func() {
 	BeforeEach(func() {
 	})
 

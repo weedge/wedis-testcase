@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
             tf = open("./scripts/tpl/ginkgo_cmd_test.tpl", 'r')
             testStr = tf.read().replace("{{CMD_TYPE}}", cmdType).replace(
-                "{{CMD}}", cmd)
+                "{{CMD}}", str(cmd).upper())
             tf.close()
 
             f = open(cmdTestFile, 'w')

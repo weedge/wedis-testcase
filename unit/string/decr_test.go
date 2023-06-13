@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("decr Cmd", func() {
+var _ = Describe("DECR Cmd", func() {
 	BeforeEach(func() {
 	})
 
@@ -13,6 +13,13 @@ var _ = Describe("decr Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.Del(ctx, "k1").Err()).NotTo(HaveOccurred())
+		Expect(c.Decr(ctx, "k1").Val()).To(Equal(int64(-1)))
+
+		Expect(c.Set(ctx, "k2", "v2", 0).Err()).NotTo(HaveOccurred())
+		Expect(c.Decr(ctx, "k2").Err().Error()).To(ContainSubstring("value is not an integer or out of range"))
+
+		Expect(c.Set(ctx, "k3", "2", 0).Err()).NotTo(HaveOccurred())
+		Expect(c.Decr(ctx, "k3").Val()).To(Equal(int64(1)))
 	})
 })

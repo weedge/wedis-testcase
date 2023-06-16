@@ -24,8 +24,8 @@ var _ = Describe("hexpireat Cmd", func() {
 		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(2)))
 		time.Sleep(1 * time.Second)
 		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(1)))
-		time.Sleep(1 * time.Second)
-		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(-1)))
+		time.Sleep(2 * time.Second) //1 s intervals check ttl
+		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(-2)))
 		time.Sleep(1 * time.Second)
 		Expect(c.HGet(ctx, k, f).Err().Error()).To(ContainSubstring("redis: nil"))
 	})

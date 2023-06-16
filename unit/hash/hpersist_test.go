@@ -13,7 +13,7 @@ var _ = Describe("hpersist Cmd", func() {
 	})
 
 	It("no exists key", func() {
-		Expect(c.Persist(ctx, "k1").Val()).To(BeFalse())
+		Expect(c.Do(ctx, "HPERSIST", "kkk").Val()).To(Equal(int64(0)))
 	})
 
 	It("ok", func() {

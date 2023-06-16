@@ -1,6 +1,8 @@
 package list
 
 import (
+	"time"
+
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -13,6 +15,14 @@ var _ = Describe("lexpire Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.RPush(ctx, "l1", "v1", "v2", "v3").Val()).To(Equal(int64(3)))
+		Expect(c.Do(ctx, "LEXPIRE", "l1", "100").Val()).To(Equal(int64(1)))
+		Expect(c.Do(ctx, "LTTL", "l1").Val()).To(Equal(int64(100)))
+		time.Sleep(1 * time.Second)
+		Expect(c.Do(ctx, "LTTL", "l1").Val()).To(Equal(int64(99)))
+	})
+
+	It("no", func() {
+		Expect(c.Do(ctx, "LEXPIRE", "k110", "100").Val()).To(Equal(int64(0)))
 	})
 })

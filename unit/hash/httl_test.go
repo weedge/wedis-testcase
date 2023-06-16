@@ -26,6 +26,6 @@ var _ = Describe("httl Cmd", func() {
 	})
 
 	It("no key", func() {
-		Expect(c.Do(ctx, "HTTL", "nokey").Val()).To(Equal(int64(-1)))
+		Expect(c.Do(ctx, "HTTL", "nokey").Val()).To(Equal(int64(-2)))
 	})
 })

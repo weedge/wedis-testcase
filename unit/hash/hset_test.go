@@ -13,6 +13,9 @@ var _ = Describe("hset Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		k, f, v := "key", "field", "val"
+		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
+		Expect(c.HGet(ctx, k, f).Val()).To(Equal(v))
+		Expect(c.HGet(ctx, k, "other").Err().Error()).To(ContainSubstring("redis: nil"))
 	})
 })

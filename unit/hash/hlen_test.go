@@ -13,6 +13,8 @@ var _ = Describe("hlen Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.HSet(ctx, "k1", "f1", "1").Err()).NotTo(HaveOccurred())
+		Expect(c.HSet(ctx, "k1", "f2", "1").Err()).NotTo(HaveOccurred())
+		Expect(c.HLen(ctx, "k1").Val()).To(Equal(int64(2)))
 	})
 })

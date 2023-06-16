@@ -13,6 +13,11 @@ var _ = Describe("hexists Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		k, f, v := "key", "field", "val"
+		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
+		Expect(c.HExists(ctx, k, f).Val()).To(BeTrue())
+	})
+	It("no", func() {
+		Expect(c.HExists(ctx, "k1", "f11").Val()).To(BeFalse())
 	})
 })

@@ -13,6 +13,6 @@ var _ = Describe("hget Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.HGet(ctx, "key", "other").Err().Error()).To(ContainSubstring("redis: nil"))
 	})
 })

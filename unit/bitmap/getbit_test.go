@@ -13,6 +13,10 @@ var _ = Describe("GETBIT Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		key, val := "key", "\x00\xff"
+		Expect(c.Set(ctx, key, val, 0).Err()).NotTo(HaveOccurred())
+		Expect(c.GetBit(ctx,key,0).Val()).To(Equal(int64(0)))
+		Expect(c.GetBit(ctx,key,8).Val()).To(Equal(int64(1)))
+		Expect(c.GetBit(ctx, key, 100).Val()).To(Equal(int64(0)))	
 	})
 })

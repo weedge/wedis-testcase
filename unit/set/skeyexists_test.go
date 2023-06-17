@@ -11,8 +11,12 @@ var _ = Describe("skeyexists Cmd", func() {
 
 	AfterEach(func() {
 	})
-
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		k := "skeyexists"
+		Expect(c.SAdd(ctx, k, "m1", "m2").Val()).To(Equal(int64(2)))
+		Expect(c.Do(ctx, "SKEYEXISTS", k).Val()).To(Equal(int64(1)))
+	})
+	It("no", func() {
+		Expect(c.Do(ctx, "SKEYEXISTS", "k11s").Val()).To(Equal(int64(0)))
 	})
 })

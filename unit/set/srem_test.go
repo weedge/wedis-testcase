@@ -13,6 +13,16 @@ var _ = Describe("srem Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		k := "srem"
+		Expect(c.SAdd(ctx, k, "m1", "m2").Val()).To(Equal(int64(2)))
+		Expect(c.SRem(ctx, k, "m1").Val()).To(Equal(int64(1)))
+		Expect(c.SRem(ctx, k, "m1").Val()).To(Equal(int64(0)))
+		Expect(c.SRem(ctx, k, "m2").Val()).To(Equal(int64(1)))
+		Expect(c.SRem(ctx, k, "m2").Val()).To(Equal(int64(0)))
+		Expect(c.SRem(ctx, k, "m3").Val()).To(Equal(int64(0)))
+		Expect(c.SMembers(ctx, k).Val()).To(Equal([]string{}))
+	})
+	It("no exists key", func() {
+		Expect(c.SRem(ctx, "noexistsrkey").Val()).To(Equal(int64(0)))
 	})
 })

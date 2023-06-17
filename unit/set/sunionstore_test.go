@@ -15,7 +15,7 @@ var _ = Describe("sunionstore Cmd", func() {
 		Expect(c.SAdd(ctx, "sunionstores1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
 		Expect(c.SAdd(ctx, "sunionstores2", "m2", "m3", "m5").Val()).To(Equal(int64(3)))
 		Expect(c.SUnionStore(ctx, "sunionstores111", "sunionstores1", "sunionstores2").Val()).To(Equal(int64(5)))
-		Expect(c.SMembers(ctx, "sunionstores111").Val()).To(Equal([]string{"m1", "m2", "m4", "m3", "m5"}))
+		Expect(c.SMembers(ctx, "sunionstores111").Val()).To(Equal([]string{"m1", "m2", "m3", "m4", "m5"})) // sort by lsm tree in memtable
 	})
 
 	It("union same", func() {

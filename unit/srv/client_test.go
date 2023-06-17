@@ -12,7 +12,9 @@ var _ = Describe("client Cmd", func() {
 	AfterEach(func() {
 	})
 
-	It("ok", func() {
-		Expect("").To(Equal(""))
+	It("getname", func() {
+		name := "weDis"
+		Expect(c.Do(ctx, "HELLO", "2", "SETNAME", name).Err()).NotTo(HaveOccurred())
+		Expect(c.ClientGetName(ctx).Val()).To(Equal(name))
 	})
 })

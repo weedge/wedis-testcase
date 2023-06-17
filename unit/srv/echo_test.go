@@ -13,6 +13,8 @@ var _ = Describe("echo Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.Echo(ctx, "hi").Val()).To(Equal("hi"))
+		Expect(c.Echo(ctx, " ").Val()).To(Equal(" "))
+		Expect(c.Echo(ctx, "").Val()).To(Equal(""))
 	})
 })

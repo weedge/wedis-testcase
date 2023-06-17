@@ -13,6 +13,11 @@ var _ = Describe("select Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		Expect(c.Do(ctx, "SELECT", 0).Err()).NotTo(HaveOccurred())
+		Expect(c.Set(ctx, "select", "test", 0).Err()).NotTo(HaveOccurred())
+		Expect(c.Do(ctx, "SELECT", 1).Err()).NotTo(HaveOccurred())
+		Expect(c.Get(ctx, "select").Err().Error()).To(ContainSubstring("redis: nil"))
+		Expect(c.Do(ctx, "SELECT", 0).Err()).NotTo(HaveOccurred())
+		Expect(c.Get(ctx, "select").Val()).To(Equal("test"))
 	})
 })

@@ -1,26 +1,15 @@
 package srv
 
 import (
-	"context"
-
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/redis/go-redis/v9"
-)
-
-var (
-	ctx context.Context
-	c   redis.UniversalClient
 )
 
 var _ = Describe("HelloCmd", func() {
 	BeforeEach(func() {
-		ctx = context.Background()
-		c = gSrv.NewRedisClient()
 	})
 
 	AfterEach(func() {
-		Expect(c.Close()).NotTo(HaveOccurred())
 	})
 
 	It("hello with protocol 2", func() {

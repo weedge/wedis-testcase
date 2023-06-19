@@ -15,16 +15,16 @@ var _ = Describe("blpop Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.RPush(ctx, "l1", "v1", "v2", "v3").Val()).To(Equal(int64(3)))
-		Expect(c.BLPop(ctx, 1*time.Second, "l1").Val()).To(Equal([]string{"l1", "v1"}))
-		Expect(c.BLPop(ctx, 1*time.Second, "l1").Val()).To(Equal([]string{"l1", "v2"}))
-		Expect(c.BLPop(ctx, 1*time.Second, "l1").Val()).To(Equal([]string{"l1", "v3"}))
-		Expect(c.BLPop(ctx, 1*time.Second, "l1").Val()).To(Equal([]string{}))
+		Expect(c.RPush(ctx, "blpopl1", "v1", "v2", "v3").Val()).To(Equal(int64(3)))
+		Expect(c.BLPop(ctx, 1*time.Second, "blpopl1").Val()).To(Equal([]string{"blpopl1", "v1"}))
+		Expect(c.BLPop(ctx, 1*time.Second, "blpopl1").Val()).To(Equal([]string{"blpopl1", "v2"}))
+		Expect(c.BLPop(ctx, 1*time.Second, "blpopl1").Val()).To(Equal([]string{"blpopl1", "v3"}))
+		Expect(c.BLPop(ctx, 1*time.Second, "blpopl1").Val()).To(Equal([]string{}))
 	})
 
 	It("block no exists", func() {
 		s := time.Now()
-		Expect(c.BLPop(ctx, 2*time.Second, "l110").Val()).To(Equal([]string{}))
+		Expect(c.BLPop(ctx, 2*time.Second, "blpopl110").Val()).To(Equal([]string{}))
 		Expect(time.Since(s).Seconds() > 2).To(BeTrue())
 	})
 

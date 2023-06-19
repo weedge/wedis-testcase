@@ -42,14 +42,14 @@ var _ = Describe("zinterstore Cmd", func() {
 	})
 
 	It("sum", func() {
-		key1 := "zinterstore1"
+		key1 := "zinterstoresum1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zinterstore2"
+		key2 := "zinterstoresum2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -69,21 +69,21 @@ var _ = Describe("zinterstore Cmd", func() {
 		}))
 	})
 	It("min", func() {
-		key1 := "zinterstore1"
+		key1 := "zinterstoremin1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zinterstore2"
+		key2 := "zinterstoremin2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
-		key3 := "zinterstoreSum"
+		key3 := "zinterstoreMin"
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
@@ -96,21 +96,21 @@ var _ = Describe("zinterstore Cmd", func() {
 		}))
 	})
 	It("max", func() {
-		key1 := "zinterstore1"
+		key1 := "zinterstoremax1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zinterstore2"
+		key2 := "zinterstoremax2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
-		key3 := "zinterstoreSum"
+		key3 := "zinterstoreMax"
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},

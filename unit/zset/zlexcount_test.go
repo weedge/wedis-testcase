@@ -14,7 +14,7 @@ var _ = Describe("zlexcount Cmd", func() {
 	})
 
 	It("ok", func() {
-		k := "zkeyexists"
+		k := "zlexcount"
 		arrZ := []redis.Z{
 			{Score: 0, Member: "a"},
 			{Score: 0, Member: "b"},

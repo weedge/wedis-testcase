@@ -43,14 +43,14 @@ var _ = Describe("zunionstore Cmd", func() {
 		}))
 	})
 	It("sum", func() {
-		key1 := "zunionstore1"
+		key1 := "zunionstoresum1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zunionstore2"
+		key2 := "zunionstoresum2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -72,14 +72,14 @@ var _ = Describe("zunionstore Cmd", func() {
 		}))
 	})
 	It("min", func() {
-		key1 := "zunionstore1"
+		key1 := "zunionstoremin1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zunionstore2"
+		key2 := "zunionstoremin2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -87,7 +87,7 @@ var _ = Describe("zunionstore Cmd", func() {
 			{Score: 4, Member: "m4"},
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
-		key3 := "zunionstoreSum"
+		key3 := "zunionstoreMin"
 		Expect(c.ZUnionStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
@@ -101,14 +101,14 @@ var _ = Describe("zunionstore Cmd", func() {
 		}))
 	})
 	It("max", func() {
-		key1 := "zunionstore1"
+		key1 := "zunionstoremax1"
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
 			{Score: 3, Member: "m3"},
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
-		key2 := "zunionstore2"
+		key2 := "zunionstoremax2"
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -116,7 +116,7 @@ var _ = Describe("zunionstore Cmd", func() {
 			{Score: 4, Member: "m4"},
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
-		key3 := "zunionstoreSum"
+		key3 := "zunionstoreMax"
 		Expect(c.ZUnionStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},

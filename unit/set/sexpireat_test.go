@@ -16,7 +16,7 @@ var _ = Describe("sexpireat Cmd", func() {
 
 	It("ok", func() {
 		t := time.Now().UTC().Unix() + 3
-		k := "ssss1"
+		k := "sexpireatssss1"
 		Expect(c.SAdd(ctx, k, "m1", "m2", "m4").Val()).To(Equal(int64(3)))
 		Expect(c.Do(ctx, "sEXPIREAT", k, t).Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "sTTL", k).Val()).To(Equal(int64(3)))
@@ -30,10 +30,10 @@ var _ = Describe("sexpireat Cmd", func() {
 	})
 
 	It("ERR invalid expire value", func() {
-		Expect(c.Do(ctx, "sEXPIREAT", "s110", "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
+		Expect(c.Do(ctx, "sEXPIREAT", "sexpireats110", "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
 	})
 
 	It("ERR value is not an integer or out of range", func() {
-		Expect(c.Do(ctx, "sEXPIREAT", "s110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
+		Expect(c.Do(ctx, "sEXPIREAT", "sexpireats110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
 	})
 })

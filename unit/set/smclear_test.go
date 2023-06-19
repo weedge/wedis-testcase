@@ -20,6 +20,6 @@ var _ = Describe("smclear Cmd", func() {
 	})
 
 	It("smclear empty", func() {
-		Expect(c.Do(ctx, "sMCLEAR", "ss11").Val()).To(Equal(int64(0)))
+		Expect(c.Do(ctx, "sMCLEAR", "smclearss11").Val()).To(Equal(int64(0)))
 	})
 })

@@ -13,7 +13,7 @@ var _ = Describe("BITPOS Cmd", func() {
 	})
 
 	It("ok", func() {
-		key, val := "key", "\xff\xf0\x00"
+		key, val := "BITPOSkey", "\xff\xf0\x00"
 		Expect(c.Set(ctx, key, val, 0).Err()).NotTo(HaveOccurred())
 		Expect(c.BitPos(ctx, key, 0).Val()).To(Equal(int64(12)))
 		val = "\x00\xff\xf0"

@@ -14,7 +14,7 @@ var _ = Describe("BITCOUNT Cmd", func() {
 	})
 
 	It("ok", func() {
-		key, val := "key", "foobar"
+		key, val := "BITCOUNT", "foobar"
 		Expect(c.Set(ctx, key, val, 0).Err()).NotTo(HaveOccurred())
 		Expect(c.BitCount(ctx, key, nil).Val()).To(Equal(int64(26)))
 		Expect(c.BitCount(ctx, key, &redis.BitCount{Start: 0, End: 0}).Val()).To(Equal(int64(4)))

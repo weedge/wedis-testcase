@@ -1,1 +1,1 @@
-sudo tcpdump -i lo0 port ${srvPort} -Ann
+`sudo tcpdump -i lo0 port ${srvPort} -Ann`

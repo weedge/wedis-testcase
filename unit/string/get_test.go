@@ -12,9 +12,9 @@ var _ = Describe("Get Cmd", func() {
 	AfterEach(func() {
 	})
 
-	It("get empty", func() {
-		key, val := "key110", "val"
-		Expect(c.Get(ctx, key).Val()).NotTo(Equal(val))
+	It("get nokey", func() {
+		key := "getnokey"
+		Expect(c.Get(ctx, key).Err().Error()).To(ContainSubstring("redis: nil"))
 	})
 
 	It("set get", func() {

@@ -11,4 +11,6 @@ const (
 	EnvDataDir     = "dataDir"
 	EnvKeepDataDir = "keepDataDir"
 	EnvSrvPort     = "srvPort"
+
+	EnvConfTestCase = "confTestCase"
 )

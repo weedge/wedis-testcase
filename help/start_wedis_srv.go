@@ -41,7 +41,7 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 	cmd.Args = append(cmd.Args, "srv")
 	cmd.Args = append(cmd.Args, "--config", srv.InitConfigs(srvConfigs).Name())
 
-	dir := srvConfigs["server.storeOpts.dataDir"]
+	dir := srvConfigs["storeCfg.dataDir"]
 	Expect(len(dir) != 0).Should(BeTrue())
 	addr := srvConfigs["server.respCmdSrv.addr"]
 	Expect(len(addr) != 0).Should(BeTrue())
@@ -71,7 +71,8 @@ func StartSrv(srvConfigs map[string]string) *WedisSrv {
 	srv.clean = func(keepDir bool) {
 		Expect(stdout.Close()).NotTo(HaveOccurred())
 		Expect(stderr.Close()).NotTo(HaveOccurred())
-		if len(os.Getenv(EnvKeepDataDir)) == 0 || !keepDir {
+		if len(os.Getenv(EnvKeepDataDir)) == 0 && !keepDir {
+			//println("remove dir", dir)
 			Expect(os.RemoveAll(dir)).NotTo(HaveOccurred())
 		}
 	}
@@ -97,7 +98,7 @@ func (s *WedisSrv) InitConfigs(srvConfigs map[string]string) (f *os.File) {
 	Expect(len(dir) != 0).Should(BeTrue())
 	dir, err = os.MkdirTemp(dir, fmt.Sprintf("%d-*", time.Now().UnixMilli()))
 	Expect(err).NotTo(HaveOccurred())
-	srvConfigs["server.storeOpts.dataDir"] = dir
+	srvConfigs["storeCfg.dataDir"] = dir
 
 	f, err = os.Create(filepath.Join(dir, "srv.toml"))
 	Expect(err).NotTo(HaveOccurred())

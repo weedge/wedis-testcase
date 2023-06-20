@@ -2,6 +2,7 @@ package zset
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -23,7 +24,7 @@ func TestStringCmd(t *testing.T) {
 }
 
 var _ = BeforeSuite(func() {
-	gSrv = help.StartSrv(map[string]string{})
+	gSrv = help.StartSrv(help.GetConfigTestCase(os.Getenv(help.EnvConfTestCase)))
 	ctx = context.Background()
 	c = gSrv.NewRedisClient()
 })

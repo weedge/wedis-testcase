@@ -13,11 +13,11 @@ var _ = Describe("hkeyexists Cmd", func() {
 	})
 
 	It("ok", func() {
-		k, f, v := "key", "field", "val"
+		k, f, v := "hkeyexistskey", "field", "val"
 		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
 		Expect(c.Do(ctx, "HKEYEXISTS", k).Val()).To(Equal(int64(1)))
 	})
 	It("no", func() {
-		Expect(c.Do(ctx, "HKEYEXISTS", "k11l").Val()).To(Equal(int64(0)))
+		Expect(c.Do(ctx, "HKEYEXISTS", "hkeyexistsk11l").Val()).To(Equal(int64(0)))
 	})
 })

@@ -15,7 +15,7 @@ var _ = Describe("httl Cmd", func() {
 	})
 
 	It("ok", func() {
-		k, f, v := "key", "field", "val"
+		k, f, v := "httlkey", "field", "val"
 		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
 		Expect(c.Do(ctx, "HEXPIRE", k, "100").Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(100)))
@@ -26,6 +26,6 @@ var _ = Describe("httl Cmd", func() {
 	})
 
 	It("no key", func() {
-		Expect(c.Do(ctx, "HTTL", "nokey").Val()).To(Equal(int64(-2)))
+		Expect(c.Do(ctx, "HTTL", "httlnokey").Val()).To(Equal(int64(-2)))
 	})
 })

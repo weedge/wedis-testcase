@@ -13,13 +13,15 @@ var _ = Describe("hmclear Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.HSet(ctx, "k1", "f1", "1").Err()).NotTo(HaveOccurred())
-		Expect(c.HSet(ctx, "k1", "f2", "1").Err()).NotTo(HaveOccurred())
-		Expect(c.Do(ctx, "HMCLEAR", "k1").Val()).To(Equal(int64(1)))
-		Expect(c.HGet(ctx, "k1", "f1").Err().Error()).To(ContainSubstring("redis: nil"))
+		k := "hmclear"
+		Expect(c.HSet(ctx, k, "f1", "1").Err()).NotTo(HaveOccurred())
+		Expect(c.HSet(ctx, k, "f2", "1").Err()).NotTo(HaveOccurred())
+		Expect(c.Do(ctx, "HMCLEAR", k).Val()).To(Equal(int64(1)))
+		Expect(c.HGet(ctx, k, "f1").Err().Error()).To(ContainSubstring("redis: nil"))
 	})
 
 	It("hmclear empty", func() {
-		Expect(c.Do(ctx, "HMCLEAR", "k1").Val()).To(Equal(int64(0)))
+		k := "hmclearnokey"
+		Expect(c.Do(ctx, "HMCLEAR", k).Val()).To(Equal(int64(0)))
 	})
 })

@@ -16,7 +16,7 @@ var _ = Describe("hexpireat Cmd", func() {
 
 	It("ok", func() {
 		t := time.Now().UTC().Unix() + 3
-		k, f, v := "key", "field", "val"
+		k, f, v := "hexpireatkey", "field", "val"
 		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
 		Expect(c.Do(ctx, "HEXPIREAT", k, t).Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(3)))
@@ -31,10 +31,10 @@ var _ = Describe("hexpireat Cmd", func() {
 	})
 
 	It("ERR invalid expire value", func() {
-		Expect(c.Do(ctx, "HEXPIREAT", "k110", "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
+		Expect(c.Do(ctx, "HEXPIREAT", "hexpireatk110", "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
 	})
 
 	It("ERR value is not an integer or out of range", func() {
-		Expect(c.Do(ctx, "HEXPIREAT", "k110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
+		Expect(c.Do(ctx, "HEXPIREAT", "hexpireatk110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
 	})
 })

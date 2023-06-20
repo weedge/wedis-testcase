@@ -13,10 +13,13 @@ var _ = Describe("hmset Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.HMSet(ctx, "k1", "f1", "v1", "f2", "v2").Err()).NotTo(HaveOccurred())
+		k := "hmsetk1"
+		Expect(c.HMSet(ctx, k, "f1", "v1", "f2", "v2").Err()).NotTo(HaveOccurred())
+		Expect(c.HMGet(ctx, k, "f1", "f2").Val()).To(Equal([]interface{}{"v1", "v2"}))
 	})
 
 	It("err", func() {
-		Expect(c.HMSet(ctx, "k1", "f1", "v1", "f2", "v2", "f3").Err().Error()).To(ContainSubstring("ERR wrong number of arguments"))
+		k := "hmsetk2"
+		Expect(c.HMSet(ctx, k, "f1", "v1", "f2", "v2", "f3").Err().Error()).To(ContainSubstring("ERR wrong number of arguments"))
 	})
 })

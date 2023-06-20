@@ -15,7 +15,7 @@ var _ = Describe("hexpire Cmd", func() {
 	})
 
 	It("ok", func() {
-		k, f, v := "key", "field", "val"
+		k, f, v := "hexpirekey", "field", "val"
 		Expect(c.HSet(ctx, k, f, v).Err()).NotTo(HaveOccurred())
 		Expect(c.Do(ctx, "HEXPIRE", k, "100").Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "HTTL", k).Val()).To(Equal(int64(100)))
@@ -24,6 +24,6 @@ var _ = Describe("hexpire Cmd", func() {
 	})
 
 	It("no", func() {
-		Expect(c.Do(ctx, "HEXPIRE", "k110", "100").Val()).To(Equal(int64(0)))
+		Expect(c.Do(ctx, "HEXPIRE", "hexpirek110", "100").Val()).To(Equal(int64(0)))
 	})
 })

@@ -13,14 +13,14 @@ var _ = Describe("sdiff Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.SAdd(ctx, "s1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SAdd(ctx, "s2", "m2", "m3", "m5").Val()).To(Equal(int64(3)))
-		Expect(c.SDiff(ctx, "s1", "s2").Val()).To(Equal([]string{"m1", "m4"}))
+		Expect(c.SAdd(ctx, "sdiffs1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SAdd(ctx, "sdiffs2", "m2", "m3", "m5").Val()).To(Equal(int64(3)))
+		Expect(c.SDiff(ctx, "sdiffs1", "sdiffs2").Val()).To(Equal([]string{"m1", "m4"}))
 	})
 
 	It("diff same", func() {
-		Expect(c.SAdd(ctx, "ss1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SAdd(ctx, "ss2", "m2", "m1", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SDiff(ctx, "ss1", "ss2").Val()).To(Equal([]string{}))
+		Expect(c.SAdd(ctx, "sdiffss1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SAdd(ctx, "sdiffss2", "m2", "m1", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SDiff(ctx, "sdiffss1", "sdiffss2").Val()).To(Equal([]string{}))
 	})
 })

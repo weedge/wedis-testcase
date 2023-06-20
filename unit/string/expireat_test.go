@@ -16,7 +16,7 @@ var _ = Describe("expireat Cmd", func() {
 
 	It("ok", func() {
 		t := time.Now().UTC().Add(3 * time.Second)
-		k := "ssss1"
+		k := "expireatssss1"
 		Expect(c.Set(ctx, k, "m1", 0).Val()).To(Equal("OK"))
 		Expect(c.ExpireAt(ctx, k, t).Val()).To(BeTrue())
 		Expect(c.TTL(ctx, k).Val()).To(Equal(3 * time.Second))
@@ -31,10 +31,10 @@ var _ = Describe("expireat Cmd", func() {
 	})
 
 	It("ERR invalid expire value", func() {
-		Expect(c.ExpireAt(ctx, "s110", time.Unix(100, 0)).Err().Error()).To(ContainSubstring("ERR invalid expire value"))
+		Expect(c.ExpireAt(ctx, "expireats110", time.Unix(100, 0)).Err().Error()).To(ContainSubstring("ERR invalid expire value"))
 	})
 
 	It("ERR value is not an integer or out of range", func() {
-		Expect(c.Do(ctx, "EXPIREAT", "s110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
+		Expect(c.Do(ctx, "EXPIREAT", "expireats110", "1a0").Err().Error()).To(ContainSubstring("ERR value is not an integer or out of range"))
 	})
 })

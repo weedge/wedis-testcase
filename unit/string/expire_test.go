@@ -24,6 +24,7 @@ var _ = Describe("expire Cmd", func() {
 	})
 
 	It("no", func() {
+		Expect(c.Del(ctx, "nokeyex").Err()).NotTo(HaveOccurred())
 		Expect(c.Expire(ctx, "nokeyex", 100*time.Second).Val()).To(BeFalse())
 	})
 })

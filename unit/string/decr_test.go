@@ -13,7 +13,7 @@ var _ = Describe("DECR Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.Del(ctx, "k1").Err()).NotTo(HaveOccurred())
+		Expect(c.Del(ctx, "k1", "k2", "k3").Err()).NotTo(HaveOccurred())
 		Expect(c.Decr(ctx, "k1").Val()).To(Equal(int64(-1)))
 
 		Expect(c.Set(ctx, "k2", "v2", 0).Err()).NotTo(HaveOccurred())

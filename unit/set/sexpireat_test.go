@@ -17,6 +17,7 @@ var _ = Describe("sexpireat Cmd", func() {
 	It("ok", func() {
 		t := time.Now().UTC().Unix() + 3
 		k := "sexpireatssss1"
+		Expect(c.Do(ctx, "SMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.SAdd(ctx, k, "m1", "m2", "m4").Val()).To(Equal(int64(3)))
 		Expect(c.Do(ctx, "sEXPIREAT", k, t).Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "sTTL", k).Val()).To(Equal(int64(3)))

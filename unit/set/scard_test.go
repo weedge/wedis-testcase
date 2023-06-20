@@ -13,8 +13,10 @@ var _ = Describe("scard Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.SAdd(ctx, "scardskeyk", "m1", "m2").Val()).To(Equal(int64(2)))
-		Expect(c.SCard(ctx, "scardskeyk").Val()).To(Equal(int64(2)))
+		k := "scardskeyk"
+		Expect(c.Do(ctx, "SMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.SAdd(ctx, k, "m1", "m2").Val()).To(Equal(int64(2)))
+		Expect(c.SCard(ctx, k).Val()).To(Equal(int64(2)))
 	})
 
 	It("no exists", func() {

@@ -14,6 +14,7 @@ var _ = Describe("sexpire Cmd", func() {
 	AfterEach(func() {
 	})
 	It("ok", func() {
+		Expect(c.Do(ctx, "SMCLEAR", "sexpires1").Err()).NotTo(HaveOccurred())
 		Expect(c.SAdd(ctx, "sexpires1", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
 		Expect(c.Do(ctx, "SEXPIRE", "sexpires1", "100").Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "STTL", "sexpires1").Val()).To(Equal(int64(100)))
@@ -22,6 +23,7 @@ var _ = Describe("sexpire Cmd", func() {
 	})
 
 	It("no", func() {
-		Expect(c.Do(ctx, "SEXPIRE", "sexpireS110", "100").Val()).To(Equal(int64(0)))
+		Expect(c.Do(ctx, "SMCLEAR", "sexpireSnokey").Err()).NotTo(HaveOccurred())
+		Expect(c.Do(ctx, "SEXPIRE", "sexpireSnokey", "100").Val()).To(Equal(int64(0)))
 	})
 })

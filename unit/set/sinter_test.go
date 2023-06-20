@@ -13,14 +13,18 @@ var _ = Describe("sinter Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.SAdd(ctx, "s11", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SAdd(ctx, "s12", "m2", "m3", "m5").Val()).To(Equal(int64(3)))
-		Expect(c.SInter(ctx, "s11", "s12").Val()).To(Equal([]string{"m2"}))
+		k1, k2 := "sinterkey1", "sinterkey2"
+		Expect(c.Do(ctx, "SMCLEAR", k1, k2).Err()).NotTo(HaveOccurred())
+		Expect(c.SAdd(ctx, k1, "m1", "m2", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SAdd(ctx, k2, "m2", "m3", "m5").Val()).To(Equal(int64(3)))
+		Expect(c.SInter(ctx, k1, k2).Val()).To(Equal([]string{"m2"}))
 	})
 
 	It("inter same", func() {
-		Expect(c.SAdd(ctx, "sss11", "m1", "m2", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SAdd(ctx, "sss12", "m2", "m1", "m4").Val()).To(Equal(int64(3)))
-		Expect(c.SInter(ctx, "sss11", "sss12").Val()).To(Equal([]string{"m1", "m2", "m4"}))
+		k1, k2 := "sinterkey1", "sinterkey2"
+		Expect(c.Do(ctx, "SMCLEAR", k1, k2).Err()).NotTo(HaveOccurred())
+		Expect(c.SAdd(ctx, k1, "m1", "m2", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SAdd(ctx, k2, "m2", "m1", "m4").Val()).To(Equal(int64(3)))
+		Expect(c.SInter(ctx, k1, k2).Val()).To(Equal([]string{"m1", "m2", "m4"}))
 	})
 })

@@ -19,4 +19,11 @@ var _ = Describe("setrange Cmd", func() {
 		Expect(c.SetRange(ctx, key, 6, "Wedis").Val()).To(Equal(int64(11)))
 		Expect(c.Get(ctx, key).Val()).To(Equal("Hello Wedis"))
 	})
+
+	It("zero padding", func() {
+		key := "setrangezeropadding"
+		Expect(c.Del(ctx, key).Err()).NotTo(HaveOccurred())
+		Expect(c.SetRange(ctx, key, 6, "Wedis").Val()).To(Equal(int64(11)))
+		Expect(c.Get(ctx, key).Val()).To(Equal("\x00\x00\x00\x00\x00\x00Wedis"))
+	})
 })

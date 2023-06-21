@@ -26,6 +26,7 @@ var _ = Describe("INCR Cmd", func() {
 		Expect(c.Incr(ctx, key).Val()).To(Equal(int64(0)))
 	})
 	It("nokey", func() {
+		Expect(c.Del(ctx, "nokey").Err()).NotTo(HaveOccurred())
 		Expect(c.Incr(ctx, "nokey").Val()).To(Equal(int64(1)))
 		Expect(c.Get(ctx, "nokey").Val()).To(Equal("1"))
 	})

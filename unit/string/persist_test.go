@@ -14,11 +14,11 @@ var _ = Describe("persist Cmd", func() {
 	AfterEach(func() {
 	})
 	It("no exists key", func() {
-		Expect(c.Persist(ctx, "nokkk").Val()).To(BeFalse())
+		Expect(c.Persist(ctx, "persistnokkk").Val()).To(BeFalse())
 	})
 
 	It("ok", func() {
-		k, val := "key", "val"
+		k, val := "persistkey", "val"
 		Expect(c.Set(ctx, k, val, 0).Err()).NotTo(HaveOccurred())
 		Expect(c.Expire(ctx, k, 100*time.Second).Val()).To(BeTrue())
 		Expect(c.TTL(ctx, k).Val()).To(Equal(100 * time.Second))

@@ -1,5 +1,7 @@
 package help
 
+import "fmt"
+
 // add some config test case
 var mapConfigTestCases = map[string]map[string]string{
 	"default": {},
@@ -10,10 +12,14 @@ var mapConfigTestCases = map[string]map[string]string{
 	},
 }
 
-func GetConfigTestCase(name string) map[string]string {
+func GetConfigTestCase(name string) (data map[string]string) {
+	defer func() {
+		fmt.Printf("name:%s testCaseConf: %+v\n", name, data)
+	}()
+
 	data, ok := mapConfigTestCases[name]
 	if ok {
-		return data
+		return
 	}
 
 	return map[string]string{}

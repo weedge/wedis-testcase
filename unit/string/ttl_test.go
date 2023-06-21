@@ -24,6 +24,7 @@ var _ = Describe("ttl Cmd", func() {
 	})
 
 	It("no key", func() {
+		Expect(c.Del(ctx, "nokeyttl").Err()).NotTo(HaveOccurred())
 		Expect(c.TTL(ctx, "nokeyttl").Val()).To(Equal(time.Duration(-2)))
 	})
 })

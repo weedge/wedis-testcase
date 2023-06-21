@@ -13,6 +13,10 @@ var _ = Describe("setrange Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
+		key, val := "setrangekey", "Hello World"
+		Expect(c.Del(ctx, key).Err()).NotTo(HaveOccurred())
+		Expect(c.Set(ctx, key, val, 0).Val()).To(Equal("OK"))
+		Expect(c.SetRange(ctx, key, 6, "Wedis").Val()).To(Equal(int64(11)))
+		Expect(c.Get(ctx, key).Val()).To(Equal("Hello Wedis"))
 	})
 })

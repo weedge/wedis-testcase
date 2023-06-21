@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("{{CMD}} Cmd", func() {
+var _ = Describe("Test {{CMD}} Cmd", func() {
 	BeforeEach(func() {
 	})
 

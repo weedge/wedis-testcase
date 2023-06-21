@@ -13,11 +13,15 @@ var _ = Describe("llen Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.RPush(ctx, "llenl1", "v1", "v2", "v3").Val()).To(Equal(int64(3)))
-		Expect(c.LLen(ctx, "llenl1").Val()).To(Equal(int64(3)))
+		k := "llenl1"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.RPush(ctx, k, "v1", "v2", "v3").Val()).To(Equal(int64(3)))
+		Expect(c.LLen(ctx, k).Val()).To(Equal(int64(3)))
 	})
 
 	It("no", func() {
-		Expect(c.LLen(ctx, "llenl111").Val()).To(Equal(int64(0)))
+		k := "llennokey"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.LLen(ctx, k).Val()).To(Equal(int64(0)))
 	})
 })

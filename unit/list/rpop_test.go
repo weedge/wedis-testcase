@@ -13,15 +13,19 @@ var _ = Describe("rpop Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect(c.LPush(ctx, "lkeyexistsll1", "v1", "v2", "v3").Val()).To(Equal(int64(3)))
-		Expect(c.RPop(ctx, "lkeyexistsll1").Val()).To(Equal("v1"))
-		Expect(c.RPop(ctx, "lkeyexistsll1").Val()).To(Equal("v2"))
-		Expect(c.RPop(ctx, "lkeyexistsll1").Val()).To(Equal("v3"))
-		Expect(c.RPop(ctx, "lkeyexistsll1").Val()).To(Equal(""))
-		Expect(c.RPop(ctx, "lkeyexistsll1").Val()).To(Equal(""))
+		k := "rpopkey"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.LPush(ctx, k, "v1", "v2", "v3").Val()).To(Equal(int64(3)))
+		Expect(c.RPop(ctx, k).Val()).To(Equal("v1"))
+		Expect(c.RPop(ctx, k).Val()).To(Equal("v2"))
+		Expect(c.RPop(ctx, k).Val()).To(Equal("v3"))
+		Expect(c.RPop(ctx, k).Val()).To(Equal(""))
+		Expect(c.RPop(ctx, k).Val()).To(Equal(""))
 	})
 
 	It("no key", func() {
-		Expect(c.RPop(ctx, "lkeyexistsnokey").Err().Error()).To(ContainSubstring("redis: nil"))
+		k := "rpopnokey"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.RPop(ctx, k).Err().Error()).To(ContainSubstring("redis: nil"))
 	})
 })

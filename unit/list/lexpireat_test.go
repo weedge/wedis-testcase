@@ -17,6 +17,7 @@ var _ = Describe("lexpireat Cmd", func() {
 	It("ok", func() {
 		t := time.Now().UTC().Unix() + 3
 		k := "lexpireatl1"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.RPush(ctx, k, "v1", "v2", "v3").Val()).To(Equal(int64(3)))
 		Expect(c.Do(ctx, "LEXPIREAT", k, t).Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "LTTL", k).Val()).To(Equal(int64(3)))

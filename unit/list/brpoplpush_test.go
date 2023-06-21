@@ -1,14 +1,21 @@
 package list
 
 import (
+	"os"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"github.com/weedge/wedis-testcase/help"
 )
 
 var _ = Describe("brpoplpush Cmd", func() {
 	BeforeEach(func() {
+		switch os.Getenv(help.EnvConfTestCase) {
+		case "xdis-tikv":
+			Expect(c.BRPopLPush(ctx, "brpoplpushl1", "brpoplpushl2", 1*time.Second).Err().Error()).To(ContainSubstring("ERR cmd not supported"))
+			Skip(os.Getenv(help.EnvConfTestCase) + "case cmd unsupoort, skip test")
+		}
 	})
 
 	AfterEach(func() {

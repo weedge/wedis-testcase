@@ -14,7 +14,8 @@ var _ = Describe("lttl Cmd", func() {
 	AfterEach(func() {
 	})
 	It("ok", func() {
-		k := "key"
+		k := "lttlkey"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.LPush(ctx, k, "v1", "v2", "v3").Val()).To(Equal(int64(3)))
 		Expect(c.Do(ctx, "LEXPIRE", k, "100").Val()).To(Equal(int64(1)))
 		Expect(c.Do(ctx, "LTTL", k).Val()).To(Equal(int64(100)))
@@ -25,6 +26,8 @@ var _ = Describe("lttl Cmd", func() {
 	})
 
 	It("no key", func() {
-		Expect(c.Do(ctx, "LTTL", "nokey").Val()).To(Equal(int64(-2)))
+		k := "lttlnokey"
+		Expect(c.Do(ctx, "LMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.Do(ctx, "LTTL", k).Val()).To(Equal(int64(-2)))
 	})
 })

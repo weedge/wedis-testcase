@@ -15,6 +15,7 @@ var _ = Describe("zrange Cmd", func() {
 
 	It("ok", func() {
 		k := "zrange"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "v1"},
 			{Score: 2, Member: "v2"},
@@ -31,6 +32,8 @@ var _ = Describe("zrange Cmd", func() {
 		}))
 	})
 	It("nokey", func() {
-		Expect(c.ZRange(ctx, "nokeyzrange", 0, -1).Val()).To(Equal([]string{}))
+		k := "nokeyzrange"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
+		Expect(c.ZRange(ctx, k, 0, -1).Val()).To(Equal([]string{}))
 	})
 })

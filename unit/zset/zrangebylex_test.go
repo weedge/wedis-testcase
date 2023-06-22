@@ -15,6 +15,7 @@ var _ = Describe("zrangebylex Cmd", func() {
 
 	It("ok", func() {
 		k := "zrangebylex"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 0, Member: "a"},
 			{Score: 0, Member: "b"},
@@ -61,6 +62,7 @@ var _ = Describe("zrangebylex Cmd", func() {
 
 	It("nokey", func() {
 		k := "zrangebylexnokey"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRangeByLex(ctx, k, &redis.ZRangeBy{
 			Min: "-", Max: "+",
 		}).Val()).To(Equal([]string{}))
@@ -68,6 +70,7 @@ var _ = Describe("zrangebylex Cmd", func() {
 
 	It("ERR wrong number of arguments", func() {
 		k := "zrangebylexerror"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRangeByLex(ctx, k, &redis.ZRangeBy{
 			Min: "-inf", Max: "+inf",
 		}).Err().Error()).To(ContainSubstring("ERR wrong number of arguments"))

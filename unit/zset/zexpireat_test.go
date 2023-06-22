@@ -16,7 +16,8 @@ var _ = Describe("zexpireat Cmd", func() {
 	})
 	It("ok", func() {
 		t := time.Now().UTC().Unix() + 3
-		k := "zexpire"
+		k := "zexpireat"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "m1"},
 		}
@@ -33,7 +34,8 @@ var _ = Describe("zexpireat Cmd", func() {
 	})
 
 	It("ERR invalid expire value", func() {
-		Expect(c.Do(ctx, "zEXPIREAT", "szs110", "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
+		k := "zexpireatinvad"
+		Expect(c.Do(ctx, "zEXPIREAT", k, "100").Err().Error()).To(ContainSubstring("ERR invalid expire value"))
 	})
 
 	It("ERR value is not an integer or out of range", func() {

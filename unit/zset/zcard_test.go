@@ -15,6 +15,7 @@ var _ = Describe("zcard Cmd", func() {
 
 	It("ok", func() {
 		key := "zcard"
+		Expect(c.Do(ctx, "zMCLEAR", key).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},

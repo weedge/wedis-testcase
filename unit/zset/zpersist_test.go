@@ -15,6 +15,7 @@ var _ = Describe("zpersist Cmd", func() {
 
 	It("ok", func() {
 		k := "zpersist"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "v1"},
 		}

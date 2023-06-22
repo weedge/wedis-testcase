@@ -16,10 +16,8 @@ var _ = Describe("zexpire Cmd", func() {
 	})
 
 	It("ok", func() {
-		Expect("").To(Equal(""))
-	})
-	It("ok", func() {
 		key := "zexpire"
+		Expect(c.Do(ctx, "zMCLEAR", key).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "m1"},
 		}
@@ -31,6 +29,7 @@ var _ = Describe("zexpire Cmd", func() {
 	})
 
 	It("no", func() {
-		Expect(c.Do(ctx, "ZEXPIRE", "Z110", "100").Val()).To(Equal(int64(0)))
+		Expect(c.Do(ctx, "zMCLEAR", "zexpirenokey").Err()).NotTo(HaveOccurred())
+		Expect(c.Do(ctx, "ZEXPIRE", "zexpirenokey", "100").Val()).To(Equal(int64(0)))
 	})
 })

@@ -15,6 +15,7 @@ var _ = Describe("zremrangebyrank Cmd", func() {
 
 	It("ok", func() {
 		k := "zremrangebyrank"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 0, Member: "a"},
 			{Score: 0, Member: "b"},
@@ -47,6 +48,7 @@ var _ = Describe("zremrangebyrank Cmd", func() {
 
 	It("nokey", func() {
 		k := "zremrangebyranknokey"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRemRangeByRank(ctx, k, 0, -1).Val()).To(Equal(int64(0)))
 	})
 })

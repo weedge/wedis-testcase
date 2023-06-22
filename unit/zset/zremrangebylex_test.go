@@ -15,6 +15,7 @@ var _ = Describe("zremrangebylex Cmd", func() {
 
 	It("ok", func() {
 		k := "zremrangebylex"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 0, Member: "a"},
 			{Score: 0, Member: "b"},
@@ -37,6 +38,7 @@ var _ = Describe("zremrangebylex Cmd", func() {
 
 	It("nokey", func() {
 		k := "zremrangebylexnokey"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRemRangeByLex(ctx, k, "a", "b").Val()).To(Equal(int64(0)))
 	})
 })

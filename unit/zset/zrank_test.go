@@ -15,6 +15,7 @@ var _ = Describe("zrank Cmd", func() {
 
 	It("ok", func() {
 		k := "zrank"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "a"},
 			{Score: 3, Member: "b"},
@@ -29,10 +30,12 @@ var _ = Describe("zrank Cmd", func() {
 
 	It("ERR invalid zset member size", func() {
 		k := "zrankerr"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRank(ctx, k, "").Err().Error()).To(Equal("ERR invalid zset member size"))
 	})
 	It("nokey", func() {
 		k := "zranknokey"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRank(ctx, k, "a").Err().Error()).To(Equal("redis: nil"))
 	})
 })

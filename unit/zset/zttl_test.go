@@ -17,6 +17,7 @@ var _ = Describe("zttl Cmd", func() {
 
 	It("ok", func() {
 		k := "zttl"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "a"},
 			{Score: 3, Member: "b"},
@@ -32,6 +33,7 @@ var _ = Describe("zttl Cmd", func() {
 	})
 
 	It("no key", func() {
+		Expect(c.Do(ctx, "zMCLEAR", "nozttlkey").Err()).NotTo(HaveOccurred())
 		Expect(c.Do(ctx, "ZTTL", "nozttlkey").Val()).To(Equal(int64(-2)))
 	})
 })

@@ -15,6 +15,7 @@ var _ = Describe("zrevrank Cmd", func() {
 
 	It("ok", func() {
 		k := "zrevrank"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "a"},
 			{Score: 3, Member: "b"},
@@ -33,6 +34,7 @@ var _ = Describe("zrevrank Cmd", func() {
 	})
 	It("nokey", func() {
 		k := "zrevranknokey"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		Expect(c.ZRevRank(ctx, k, "a").Err().Error()).To(Equal("redis: nil"))
 	})
 })

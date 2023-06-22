@@ -18,7 +18,7 @@ var (
 	c   redis.UniversalClient
 )
 
-func TestStringCmd(t *testing.T) {
+func TestListCmd(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "LIST CMD Suite")
 }

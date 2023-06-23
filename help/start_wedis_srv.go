@@ -98,7 +98,10 @@ func (s *WedisSrv) InitConfigs(srvConfigs map[string]string) (f *os.File) {
 	Expect(len(dir) != 0).Should(BeTrue())
 	dir, err = os.MkdirTemp(dir, fmt.Sprintf("%d-*", time.Now().UnixMilli()))
 	Expect(err).NotTo(HaveOccurred())
-	srvConfigs["storeCfg.dataDir"] = dir
+	// if want test one storager for diff suit test, please config storeCfg.dataDir, keep dir don't remove
+	if srvConfigs["storeCfg.dataDir"] == "" {
+		srvConfigs["storeCfg.dataDir"] = dir
+	}
 
 	f, err = os.Create(filepath.Join(dir, "srv.toml"))
 	Expect(err).NotTo(HaveOccurred())

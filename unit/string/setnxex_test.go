@@ -22,7 +22,7 @@ var _ = Describe("setnxex Cmd", func() {
 	})
 
 	It("exists", func() {
-		key, ex, val := "key", 100, "val"
+		key, ex, val := "setnxexexists", 100, "val"
 		Expect(c.Del(ctx, key).Err()).NotTo(HaveOccurred())
 		Expect(c.Set(ctx, key, val, 0).Val()).To(Equal("OK"))
 		Expect(c.Do(ctx, "setnxex", key, ex, val).Val()).To(Equal(int64(0)))

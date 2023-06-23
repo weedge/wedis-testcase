@@ -5,6 +5,10 @@ import "fmt"
 // add some config test case
 var mapConfigTestCases = map[string]map[string]string{
 	"default": {},
+	"xdis-storager-dir": {
+		"server.storagerName": "xdis-storager",
+		"storeCfg.dataDir":    "/tmp/wedis-data",
+	},
 	"xdis-tikv": {
 		"server.storagerName":                   "xdis-tikv",
 		"tikvStoreCfg.prefixKey":                "testcase",

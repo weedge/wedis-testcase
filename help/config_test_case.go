@@ -7,7 +7,7 @@ var mapConfigTestCases = map[string]map[string]string{
 	"default": {},
 	"xdis-tikv": {
 		"server.storagerName":                   "xdis-tikv",
-		"tikvStoreCfg.prefixKey":                "wedis-testcase-tikv",
+		"tikvStoreCfg.prefixKey":                "testcase",
 		"tikvStoreCfg.ttlCheckInterval":         "1",
 		"tikvStoreCfg.tikvClientOpts.useTxnApi": "1",
 	},

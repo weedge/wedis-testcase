@@ -15,6 +15,7 @@ var _ = Describe("zlexcount Cmd", func() {
 
 	It("ok", func() {
 		k := "zlexcount"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 0, Member: "a"},
 			{Score: 0, Member: "b"},

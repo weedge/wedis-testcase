@@ -15,6 +15,7 @@ var _ = Describe("zkeyexists Cmd", func() {
 
 	It("ok", func() {
 		k := "zkeyexists"
+		Expect(c.Do(ctx, "zMCLEAR", k).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},

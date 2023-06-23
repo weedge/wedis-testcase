@@ -15,6 +15,7 @@ var _ = Describe("zincrby Cmd", func() {
 
 	It("ok", func() {
 		key := "zincrby"
+		Expect(c.Do(ctx, "zMCLEAR", key).Err()).NotTo(HaveOccurred())
 		arrZ := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},

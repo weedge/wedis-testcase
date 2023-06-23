@@ -15,6 +15,7 @@ var _ = Describe("zinterstore Cmd", func() {
 
 	It("ok", func() {
 		key1 := "zinterstore1"
+		Expect(c.Do(ctx, "zMCLEAR", key1).Err()).NotTo(HaveOccurred())
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -22,6 +23,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
 		key2 := "zinterstore2"
+		Expect(c.Do(ctx, "zMCLEAR", key2).Err()).NotTo(HaveOccurred())
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -29,6 +31,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
 		key3 := "zinterstoreSum"
+		Expect(c.Do(ctx, "zMCLEAR", key3).Err()).NotTo(HaveOccurred())
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
@@ -43,6 +46,7 @@ var _ = Describe("zinterstore Cmd", func() {
 
 	It("sum", func() {
 		key1 := "zinterstoresum1"
+		Expect(c.Do(ctx, "zMCLEAR", key1).Err()).NotTo(HaveOccurred())
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -50,6 +54,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
 		key2 := "zinterstoresum2"
+		Expect(c.Do(ctx, "zMCLEAR", key2).Err()).NotTo(HaveOccurred())
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -57,6 +62,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
 		key3 := "zinterstoreSum"
+		Expect(c.Do(ctx, "zMCLEAR", key3).Err()).NotTo(HaveOccurred())
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
@@ -70,6 +76,7 @@ var _ = Describe("zinterstore Cmd", func() {
 	})
 	It("min", func() {
 		key1 := "zinterstoremin1"
+		Expect(c.Do(ctx, "zMCLEAR", key1).Err()).NotTo(HaveOccurred())
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -77,6 +84,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
 		key2 := "zinterstoremin2"
+		Expect(c.Do(ctx, "zMCLEAR", key2).Err()).NotTo(HaveOccurred())
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -84,6 +92,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
 		key3 := "zinterstoreMin"
+		Expect(c.Do(ctx, "zMCLEAR", key3).Err()).NotTo(HaveOccurred())
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
@@ -97,6 +106,7 @@ var _ = Describe("zinterstore Cmd", func() {
 	})
 	It("max", func() {
 		key1 := "zinterstoremax1"
+		Expect(c.Do(ctx, "zMCLEAR", key1).Err()).NotTo(HaveOccurred())
 		arrZ1 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -104,6 +114,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key1, arrZ1...).Val()).To(Equal(int64(len(arrZ1))))
 		key2 := "zinterstoremax2"
+		Expect(c.Do(ctx, "zMCLEAR", key2).Err()).NotTo(HaveOccurred())
 		arrZ2 := []redis.Z{
 			{Score: 1, Member: "m1"},
 			{Score: 2, Member: "m2"},
@@ -111,6 +122,7 @@ var _ = Describe("zinterstore Cmd", func() {
 		}
 		Expect(c.ZAdd(ctx, key2, arrZ2...).Val()).To(Equal(int64(len(arrZ2))))
 		key3 := "zinterstoreMax"
+		Expect(c.Do(ctx, "zMCLEAR", key3).Err()).NotTo(HaveOccurred())
 		Expect(c.ZInterStore(ctx, key3, &redis.ZStore{
 			Keys:      []string{key1, key2},
 			Weights:   []float64{2, 3},
